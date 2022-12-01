@@ -3,42 +3,11 @@ export default {
     data() {
         return {
             questions: [
-                { id: 1, description: "Si je ne vais pas jusqu’à la pénétration, il est impossible que j’attrape une IST.", response: false, explication:"Certaines IST peuvent être « manuportées », c’est-à-dire transmises par le biais des mains, quand il y a échange ou contact de fluides (sécrétions vaginales ou sperme)." },
-                { id: 2, description: "Si mon test VIH est négatif, je suis aussi négatif aux autres IST.", response: false , explication:"Le test VIH ne dépiste pas les autres IST !"},
-                { id: 3, description: "Si mon test VIH est négatif, je suis aussi négatif aux autres IST.", response: false , explication:"Le test VIH ne dépiste pas les autres IST !"},
-                { id: 4, description: "Si mon test VIH est négatif, je suis aussi négatif aux autres IST.", response: false , explication:"Le test VIH ne dépiste pas les autres IST !"},
-                { id: 5, description: "Si mon test VIH est négatif, je suis aussi négatif aux autres IST.", response: false , explication:"Le test VIH ne dépiste pas les autres IST !"},
-            ],
-            questionId: 0,
-            correctAnswers: 0,
-            questionAnswered: false,
-            wellAnswered:false,
-            gameOver:false
         }
     },
     methods: {
-        questionSuivante() {
-            this.questionAnswered = false
-            this.questionId++
-        },
         valid(id) {
             console.log("Question id: " + id)
-            this.$emit('emitValid', { index: id })
-        },
-        answer(bool) {
-            if (this.questions[this.questionId].response == bool) {
-                this.wellAnswered = true
-                console.log('Win')
-                this.correctAnswers++
-                console.log(this.correctAnswers)
-            } else {
-                this.wellAnswered = false
-                console.log('Lose')
-            }
-            this.questionAnswered = true
-        },
-        end(){
-            this.gameOver =true;
         }
     }
 }
