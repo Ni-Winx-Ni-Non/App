@@ -2,47 +2,27 @@
 export default {
     data() {
         return {
-            title: 'Mon questionnaire',
             questions: [
-                {
-                    text: "Question 1",
-                    responses: [
-                        { text: 'Mauvaise réponse, dommage.' },
-                        { text: 'Bonne réponse !', correct: true },
-                    ]
-                }, {
-                    text: "Question 2",
-                    responses: [
-                        { text: 'Bonne réponse', correct: true },
-                        { text: 'Mauvaise réponse' },
-                    ]
-                }
+                {id: 1, title: 'MST', description: "Qu'est ce que c'est ?"},
+                {id: 2, title: 'IST', description: "Qu'est ce que c'est ?"},
             ]
+        }
+    },
+    methods: {
+        valid(id) {
+            console.log("Question id: " + id)
+            this.$emit('emitValid', {index: id})
         }
     }
 }
 </script>
 
 <template>
-    <div>Quizz</div>
     <div>
-      <!-- Titre du quiz -->
-      <h1>{{ title }}</h1>
-      <!-- Questions: on affiche une div pour chaque question -->
-      <div v-for="question in questions">
-        <h2>{{ question.text }}</h2>
-        <!-- Responses: on affiche une balise li pour chaque réponse possible -->
-        <ol>
-          <li v-for="response in question.responses">
-            <label>
-              <input type="radio"> {{response.text}}
-            </label>
-          </li>
-        </ol>
-      </div>
+        <div v-for="(item, index) in questions" :key="index">
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.description }}</p>
+            <button @click="valid(index)">Valider</button>
+        </div>
     </div>
 </template>
-
-<style scoped>
-
-</style>
