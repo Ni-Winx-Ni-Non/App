@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div class="grid4">
         <div v-for="(item, index) in questions" :key="index">
             <h2>{{ item.title }}</h2>
             <p>{{ item.description }}</p>
@@ -26,3 +26,12 @@ export default {
         </div>
     </div>
 </template>
+
+<style>
+.grid4 {
+    display: grid;
+    box-sizing: border-box;
+    gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+</style>
