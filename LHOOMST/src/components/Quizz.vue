@@ -2,6 +2,7 @@
 export default {
     data() {
         return {
+            
             questions: [
                 {id: 1, title: 'MST', description: "Qu'est ce que c'est ?"},
                 {id: 2, title: 'IST', description: "Qu'est ce que c'est ?"},
