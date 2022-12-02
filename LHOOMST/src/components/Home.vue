@@ -34,6 +34,19 @@ export default {
     <div id="more_informations">
         <div style="text-align: center;">
             <button id="back_to_menu" @click="scrollup()">Revenir au menu</button>
+            <div class="explications">
+                <h2 style="font-weight: bold; margin-bottom: 1rem;">Bienvenue dans LHOOMST !</h2>
+
+                <h3>Le jeu qui informe sur la santé sexuelle : peu importe ton âge ou ton sexe, ce jeu t’apprendra ou te
+                    rafraîchira la mémoire en te donnant des informations sur les IST et la contraception 😉</h3>
+
+                <h3>Viens découvrir ce monde à travers les différents niveaux qui te sont proposés.</h3>
+
+                <h3>Bonne aventure à toi !</h3>
+                <div id="bottom">
+                    <img id="ballon" src="../assets/ballon.png">
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -109,6 +122,7 @@ button {
     border: 2px solid white;
     color: #3C7196;
     font-size: 1rem;
+    margin-bottom: 3rem;
 }
 
 #more_informations {
@@ -116,4 +130,30 @@ button {
     width: 100%;
     background-color: #3C7196;
 }
+
+.explications {
+    margin: 2rem;
+    text-align: justify;
+    text-align-last: left;
+    color: white;
+}
+
+#bottom {
+    width : 70vw;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+#ballon{
+    display: block;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
 </style>

@@ -1,6 +1,7 @@
 <script>
 import Quizz from "./components/Quizz.vue"
 import Home from "./components/Home.vue"
+import Captcha from "./components/Captcha.vue"
 export default {
   components: {
     Home
