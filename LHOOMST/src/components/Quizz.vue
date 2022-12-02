@@ -112,8 +112,8 @@ button {
     background-color: #3C7196;
     color: white;
     border: 2px solid #3C7196;
-    padding: 1rem 5rem;
-    border-radius: 1rem;
+    padding: 2vh 8vh;
+    border-radius: 2rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
     font-size: 1rem;
