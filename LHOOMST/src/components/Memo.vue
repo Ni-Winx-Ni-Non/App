@@ -118,6 +118,7 @@ export default {
                 <button @click="($emit('endMemo',{result:coups}),reset())">Continuez</button>
             </div>
         </div>
+        <div>Associez les infections avec leurs descriptions. Pour cela, cliquez d'abord sur une carte rose, lisez la description puis tentez de trouver la carte bleue correspondante.</div>
         <div v-if="reponse" class="listereponse">
             <div v-for="item in nom" >
                   <p  v-if="carteFinal[item].visible==2" style="text-decoration: underline;">{{ carteFinal[item].Nom }} :</p>
@@ -130,8 +131,11 @@ export default {
                 <p  v-if="item.typecarte">{{ item.Nom }}</p>
                 <p  v-else> Texte carte     </p>
             </div>
-            <div v-else-if="item.visible==0" style="align-self: center;  border: 2px solid #FFC6C0; border-radius:2px;">
-                 <img  @click="clickCarte(index)" style=" max-width: 100%; background-color:cyan " src="../assets/logoapp.png">
+            <div v-else-if="(item.visible==0 && !item.typecarte)" style="align-self: center; border-radius:2rem;" class="a">
+                 <img  @click="clickCarte(index)" style=" max-width: 60%; background-color:#fc9e8b " src="../assets/logoapp.png">
+            </div>
+            <div v-else-if="(item.visible==0 &&item.typecarte)" style="align-self: center; border-radius:2rem;" class="a">
+                 <img  @click="clickCarte(index)" style=" max-width: 60%; background-color:#cafcf7 " src="../assets/logoapp.png">
             </div>
           </div>
           
@@ -148,7 +152,7 @@ export default {
           </div>
         <div class="rep">
             <div class="reponse">
-                <h1> Réponse </h1>
+                <h2> Réponse </h2>
             </div>
 
            <div v-if="reponse" @click="clickreponse() ">
@@ -184,6 +188,7 @@ h3 {
   width: 100%;
   height: 100%;
   grid-template-columns: repeat(4, minmax(0, 1fr))
+
 }
 .score{
     display:flex;
@@ -203,7 +208,8 @@ h3 {
    align-items: flex-start; 
    justify-content:space-between; 
    height: 100vh;
-   background-color:#FFC6C0; 
+   background-color:#8DB0B9; 
+   padding: 2rem;
 }
 .entete{
     display: flex; 
@@ -218,6 +224,7 @@ h3 {
 .a{
     display:flex;
     align-items:center;
+    justify-content: center;
 }
 .rep{
      display: flex; 
