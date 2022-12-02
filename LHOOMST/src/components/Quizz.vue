@@ -108,6 +108,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    background-color: white;
 }
 
 button {
