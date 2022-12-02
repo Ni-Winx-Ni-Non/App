@@ -9,7 +9,8 @@ export default {
             correctAnswers: 0,
             questionAnswered: false,
             wellAnswered: true,
-            gameOver: false
+            gameOver: false,
+            game:1
         }
     },
     methods: {
@@ -41,11 +42,12 @@ export default {
         },
         reset() {
 
-            this.questionId = 0,
+            //this.questionId = 0,
                 this.correctAnswers = 0,
                 this.questionAnswered = false,
                 this.wellAnswered = true,
                 this.gameOver = false,
+                this.game++,
                 console.log('Quizz destroyed')
         }
 
@@ -78,7 +80,7 @@ export default {
         </div>
 
         <div v-else class="boutons">
-            <button v-if="(questionId < 5 - 1)" @click="questionSuivante">Suivant</button>
+            <button v-if="(questionId < game*5 - 1)" @click="questionSuivante">Suivant</button>
             <button v-else @click="end">Voir le score</button>
         </div>
 
