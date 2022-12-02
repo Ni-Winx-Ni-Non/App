@@ -6,11 +6,12 @@ instance.word = instance.word.toUpperCase();
 
 export default {
     data() {
-        return {images: {
-                1: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O",
-                2: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O",
-                3: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O",
-                4: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O"
+        return {
+            images: {
+                1: "src/assets/images/hints/" + instance.hints[0] + ".png",
+                2: "src/assets/images/hints/" + instance.hints[1] + ".png",
+                3: "src/assets/images/hints/" + instance.hints[2] + ".png",
+                4: "src/assets/images/hints/" + instance.hints[3] + ".png"
             },
             fullsizeImage: undefined,
 
