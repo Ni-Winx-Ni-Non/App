@@ -13,6 +13,15 @@ export default {
                 {id: 6, Nom: 'six', texte: "six", visible: true, typecarte:true, idcomplementaire: 14},
                 {id: 7, Nom: 'sept', texte: "sept", visible: true, typecarte:true, idcomplementaire: 15},
                 {id: 8, Nom: 'huit', texte: "huit", visible: true, typecarte:true, idcomplementaire: 16},
+                {id: 9, Nom: 'neuf', texte: "description neuf", visible: true, typecarte:false, idcomplementaire: 1},
+                {id: 10, Nom: 'neuf', texte: "description dix", visible: true, typecarte:false, idcomplementaire: 2},
+                {id: 11, Nom: 'neuf', texte: "description onze", visible: true, typecarte:false, idcomplementaire: 3},
+                {id: 12, Nom: 'neuf', texte: "description douze", visible: true, typecarte:false, idcomplementaire: 4},
+                {id: 13, Nom: 'neuf', texte: "description treize", visible: true, typecarte:false, idcomplementaire: 5},
+                {id: 14, Nom: 'neuf', texte: "description quatorze", visible: true, typecarte:false, idcomplementaire: 6},
+                {id: 15, Nom: 'neuf', texte: "description quinze", visible: true, typecarte:false, idcomplementaire: 7},
+                {id: 16, Nom: 'neuf', texte: "description seize", visible: true, typecarte:false, idcomplementaire: 8},
+
             ]
         }
     },
