@@ -4,9 +4,18 @@ export default {
   components: {
     Quizz
   },
+  data() {
+    return {
+      quizzResult: [],
+      quizSelect: true
+    }
+  },
   methods: {
     emitQuizz(params) {
-      console.log("Emit: " + JSON.stringify(params))
+      this.quizSelect = false
+      console.log("Quiz terminé")
+      this.quizzResult.push(params.result)
+      console.log(JSON.stringify(this.quizzResult))
     }
   }
 }
@@ -16,7 +25,7 @@ export default {
   <div class="main">
     <div class="ratioView">
       <div class="view">
-        <Quizz @emitValid="emitQuizz" />
+        <Quizz id=""  @endQuizz="emitQuizz" />
       </div>
     </div>
   </div>

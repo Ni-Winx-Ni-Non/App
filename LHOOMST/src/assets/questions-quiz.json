@@ -1,0 +1,32 @@
+[
+    {
+        "description": "Si je ne vais pas jusqu’à la pénétration, il est impossible que j’attrape une IST.",
+        "response": false,
+        "explication": "Certaines IST peuvent être « manuportées », c’est-à-dire transmises par le biais des mains, quand il y a échange ou contact de fluides (sécrétions vaginales ou sperme)."
+    },
+    {
+        "description": "Si mon test VIH est négatif, je suis aussi négatif aux autres IST.", 
+        "response": false, 
+        "explication": "Le test VIH ne dépiste pas les autres IST !"
+    },
+    {
+        "description": "Le moyen le plus efficace pour se protéger des Infections Sexuellement Transmissibles est d’utiliser un préservatif pendant les rapports sexuels.",
+        "response": true,
+        "explication": ""
+    },
+    {
+        "description": "Tant que je n’ai pas de symptôme, je n’ai pas besoin de me faire dépister.",
+        "response": false,
+        "explication": "On peut être infecté par une IST sans ressentir de symptômes. Le seul moyen d'en être sûr, c'est le dépistage !"
+    },
+    {
+        "description": "La plupart des IST se soignent facilement.",
+        "response": true,
+        "explication": "Vrai, la plupart des IST se soignent facilement !"
+    },
+    {
+        "description": "La plupart des IST se soignent facilement.",
+        "response": true,
+        "explication": "Vrai, la plupart des IST se soignent facilement !"
+    }
+]
