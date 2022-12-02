@@ -24,6 +24,7 @@ export default {
       clic:0,
       captcha: true,
       indexGame: 0,
+      indexQuiz: 1,
       cloud: [
         {x: 200, y: 1450, visible: false},
         {x: 840, y: 1400, visible: false},
@@ -76,6 +77,7 @@ export default {
         }
         if (this.quizSelect) {
             this.quizSelect = false
+            this.indexQuiz++
             this.quizzResult.push(params.result)
         }
         if (this.imageSelect) {
@@ -116,7 +118,7 @@ export default {
         </div> 
       </div>
     </div>
-    <Quizz v-if="quizSelect" :gameIndex="indexGame" @endQuizz="nextGameEnd" />
+    <Quizz v-if="quizSelect" :gameIndex="indexQuiz" @endQuizz="nextGameEnd" />
     <Memo v-if="memoSelect" @endMemo="nextGameEnd" />
     <FourImagesOneWord v-if="imageSelect" @endGame="nextGameEnd"/>
     <div v-if="captcha" style="background-color: white; max-width: 400px; height: 100vh">
