@@ -1,15 +1,28 @@
 <script>
 import Quizz from "../components/Quizz.vue"
+import Captcha from "../components/Captcha.vue"
+import Memo from "../components/Memo.vue"
+import FourImagesOneWord from "../components/FourImagesOneWord.vue"
 export default {
   components: {
-    Quizz
+    Quizz,
+    Captcha,
+    Memo,
+    FourImagesOneWord
   },
   data() {
     return {
       larg: null,
       haut: null,
       quizzResult: [],
+      memoResult: [],
+      gameSelect: 0,
       quizSelect: false,
+      memoSelect: false,
+      imageSelect: false,
+      jeu:true,
+      clic:0,
+      captcha: true,
       indexGame: 0,
       cloud: [
         {x: 200, y: 1450, visible: false},
@@ -26,6 +39,13 @@ export default {
     }
   },
   methods: {
+    easterEGG () { 
+      this.clic=this.clic+1;
+      if(this.clic==12){
+      this.jeu=!this.jeu
+      this.clic=0
+      }
+    },
     emitQuizz(params) {
       console.log("Emit: " + JSON.stringify(params))
     },
@@ -38,14 +58,33 @@ export default {
     nextGame() {
       this.cloud[this.indexGame].visible = false
       this.indexGame++
-      this.quizSelect = true
+      if (this.gameSelect == 0) {
+        this.imageSelect = true
+        this.gameSelect++
+      } else if (this.gameSelect == 1) {
+        this.quizSelect = true
+        this.gameSelect++
+      } else {
+        this.memoSelect = true
+        this.gameSelect = 0
+      }
     },
     nextGameEnd(params) {
-        this.quizSelect = false
-        this.quizzResult.push(params.result)
+        if (this.memoSelect) {
+            this.memoSelect = false
+            this.memoResult.push(params.result)
+        }
+        if (this.quizSelect) {
+            this.quizSelect = false
+            this.quizzResult.push(params.result)
+        }
+        if (this.imageSelect) {
+            this.imageSelect = false
+        }
         if (this.indexGame < this.cloud.length) {
             this.cloud[this.indexGame].visible = true
         } else {
+            alert("Bravo !" )
             console.log("Show Result")
         }
     }
@@ -63,18 +102,38 @@ export default {
 <template>
   <div class="main">
     <div class="ratioView">
-      <div id="view" class="view">
+      <div id="view" class="view" v-if="jeu">
         <button @click="$router.back()" style="position: absolute; top: 20px; left: 20px" id="enter">Quitter</button>
         <div v-for="(item, index) in cloud" :key="index">
           <div @click="nextGame()" :style="'height: ' + (200 * haut) / 1920 + 'px; width: ' + (200 * larg) / 1080 + 'px; position: absolute; top: ' + (item.y * haut)/ 1920 + 'px; left:' + (item.x * larg) / 1080 + 'px'" style="border: 1px solid #252525; cursor: pointer" v-if="item.visible"></div>
+            <div @click="easterEGG()" :style="'height: ' + (200 * haut) / 1920 + 'px; width: ' + (200 * larg) / 1080 + 'px; position: absolute; top: ' + (100 * haut)/ 1920 + 'px; left:' + (750 * larg) / 1080 + 'px'" style="cursor: pointer">
+            </div> 
         </div>
+      </div>
+      <div id="vieweasteregg" class="viewvieweasteregg" v-else>
+        <img src="../assets/winx.jpg" style="width:100%">
+        <div @click="jeu = false" :style="'height: ' + (200 * haut) / 1920 + 'px; width: ' + (200 * larg) / 1080 + 'px; position: absolute; top: ' + (100 * haut)/ 1920 + 'px; left:' + (500 * larg) / 1080 + 'px'" style="border: 1px solid #252525; cursor: pointer">
+        </div> 
       </div>
     </div>
     <Quizz v-if="quizSelect" :gameIndex="indexGame" @endQuizz="nextGameEnd" />
+    <Memo v-if="memoSelect" @endMemo="nextGameEnd" />
+    <FourImagesOneWord v-if="imageSelect" @endGame="nextGameEnd"/>
+    <div v-if="captcha" style="background-color: white; height: 100vh">
+        <Captcha @EndCaptcha="captcha = false" />
+    </div>
   </div>
 </template>
 
 <style scoped>
+.vieweasteregg {
+  border: 1px solid #252525;
+  aspect-ratio: 9/16;
+  max-height: 100%;
+  background-image: url('../assets/winx.jpg');
+  background-size: cover;
+  background-position: center;
+}
 button {
     background-color: #3C7196;
     color: white;
