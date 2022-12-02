@@ -1,8 +1,9 @@
 <script>
 import Quizz from "./components/Quizz.vue"
+import Home from "./components/Home.vue"
 export default {
   components: {
-    Quizz
+    Home
   },
   methods: {
     emitQuizz(params) {
@@ -14,6 +15,6 @@ export default {
 
 <template>
     <div>
-      <Quizz @emitValid="emitQuizz" />
-    </div>
+      <Home />
+    </div> 
 </template>
