@@ -1,15 +1,26 @@
 <script>
 import Quizz from "../components/Quizz.vue"
+import Captcha from "../components/Captcha.vue"
+import Memo from "../components/Memo.vue"
+import FourImagesOneWord from "../components/FourImagesOneWord.vue"
 export default {
   components: {
-    Quizz
+    Quizz,
+    Captcha,
+    Memo,
+    FourImagesOneWord
   },
   data() {
     return {
       larg: null,
       haut: null,
       quizzResult: [],
+      memoResult: [],
+      gameSelect: 0,
       quizSelect: false,
+      memoSelect: false,
+      imageSelect: false,
+      captcha: true,
       indexGame: 0,
       cloud: [
         {x: 200, y: 1450, visible: false},
@@ -38,14 +49,33 @@ export default {
     nextGame() {
       this.cloud[this.indexGame].visible = false
       this.indexGame++
-      this.quizSelect = true
+      if (this.gameSelect == 0) {
+        this.imageSelect = true
+        this.gameSelect++
+      } else if (this.gameSelect == 1) {
+        this.quizSelect = true
+        this.gameSelect++
+      } else {
+        this.memoSelect = true
+        this.gameSelect = 0
+      }
     },
     nextGameEnd(params) {
-        this.quizSelect = false
-        this.quizzResult.push(params.result)
+        if (this.memoSelect) {
+            this.memoSelect = false
+            this.memoResult.push(params.result)
+        }
+        if (this.quizSelect) {
+            this.quizSelect = false
+            this.quizzResult.push(params.result)
+        }
+        if (this.imageSelect) {
+            this.imageSelect = false
+        }
         if (this.indexGame < this.cloud.length) {
             this.cloud[this.indexGame].visible = true
         } else {
+            alert("Bravo !" )
             console.log("Show Result")
         }
     }
@@ -71,6 +101,11 @@ export default {
       </div>
     </div>
     <Quizz v-if="quizSelect" @endQuizz="nextGameEnd" />
+    <Memo v-if="memoSelect" @endMemo="nextGameEnd" />
+    <FourImagesOneWord v-if="imageSelect" @endGame="nextGameEnd"/>
+    <div v-if="captcha" style="background-color: white; height: 100vh">
+        <Captcha @EndCaptcha="captcha = false" />
+    </div>
   </div>
 </template>
 
