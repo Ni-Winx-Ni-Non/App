@@ -23,7 +23,7 @@ export default {
         <div id="center">
             <img id="logo" src="../assets/logoapp.png" style="width:20rem ;">
             <div>
-                <button id="enter">Entrer dans le jeu</button>
+                <button @click="$router.push('/game')" id="enter">Entrer dans le jeu</button>
             </div>
         </div>
         <div id="informations">
