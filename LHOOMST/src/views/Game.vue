@@ -70,7 +70,7 @@ export default {
         </div>
       </div>
     </div>
-    <Quizz v-if="quizSelect" @endQuizz="nextGameEnd" />
+    <Quizz v-if="quizSelect" :gameIndex="indexGame" @endQuizz="nextGameEnd" />
   </div>
 </template>
 
