@@ -3,26 +3,43 @@ export default {
     data() {
         return {
           coups: 0,
-      temps: 0, 
+      temps: 0,
+      reponse:false,
       idcarte1:-1,
       idcarte1Select: -1,
       idcarte2Select: -1,
+      nom:[],
+      victoire:0,
             cartes: [
 
-                {id: 1, Nom: 'Chlamydiose', texte: "Souvent asymptomatque. Symptômes femmes: brûlure en urinant, écoulements anormaux de l'anus, douleurs abdominales, spotting, saignements ou écoulements anormaux entre les règles, douleur aux rapports sexuels. Symptômes homme: brûlure en urinant, gonflement/douleur des testicules, démangeaisons de l'urètre, inflamation du rectum", visible: true, typecarte:true},
-                {id: 2, Nom: 'VIH', texte: "Longue phase sans signe apparent, mais pendant laquelle le virus est présent dans l’organisme et, en l’absence de traitement, peut être transmis. Le seul moyen de diagnostic est un despistage régulier. Sans traitement approprié, ce virus affaiblit progressivement le système immunitaire.", visible: true, typecarte:true},
-                {id: 3, Nom: 'Gardnerella vaginalis', texte: "Atteint rarement et de manière asymptomatique les hommes. Pour les femmes les symptômes sont des pertes blanches grisâtre et fluide. Elle peut conduire à une vaginose et se transformer en vaginite ou vulvite", visible: true, typecarte:true},
-                {id: 4, Nom: 'Gonococcie', texte: "Aussi appelé chaude-pisse. Se transmet lors de rapport non protégés. Symptômes chez l'homme : écoulement de pus par la verge, brûlures urinaires. Souvent asymptomatique chez la femme, on peut tout de même observer des démengeaisons, des douleurs au rapport, des brûlures en urinant.", visible: true, typecarte:true},
-                {id: 5, Nom: 'Herpès génital', texte: "Virus qui reste à vie dans l'organisme et se manifeste par des poussées. Les symptômes sont des petites vésicules qui peuvent brûler ou démanger", visible: true, typecarte:true},
-                {id: 6, Nom: 'Morpions', texte: "Petits insectes noirs qui transmettent la phtiriase. Symptômes: démangeaisons", visible: true, typecarte:true},
-                {id: 7, Nom: 'Trichomonase', texte: "Causée par un parasite. Se transmet aussi en partageant le linge de toilette ou les sous-vêtements. Peut causer une vaginite ou une urétrite.", visible: true, typecarte:true},
-                {id: 8, Nom: 'Syphilis', texte: "Causée par une bactérie. Évolue en trois stade : 1) Lésion ronde, unique, dure et non douloureuse sur les parties générale. 2) Lésions rose pale ou brunes qui semble peler pouvant toucher le corps entier. 3) Complications tardives dues à une non détection", visible: true, typecarte:true},
+                {id: 1, Nom: 'Chlamydiose', texte: "Souvent asymptomatque. Symptômes femmes: brûlure en urinant, écoulements anormaux de l'anus, douleurs abdominales, spotting, saignements ou écoulements anormaux entre les règles, douleur aux rapports sexuels. Symptômes homme: brûlure en urinant, gonflement/douleur des testicules, démangeaisons de l'urètre, inflamation du rectum", visible: 0, typecarte:true},
+                {id: 2, Nom: 'VIH', texte: "Longue phase sans signe apparent, mais pendant laquelle le virus est présent dans l’organisme et, en l’absence de traitement, peut être transmis. Le seul moyen de diagnostic est un despistage régulier. Sans traitement approprié, ce virus affaiblit progressivement le système immunitaire.", visible: 0, typecarte:true},
+                {id: 3, Nom: 'Gardnerella vaginalis', texte: "Atteint rarement et de manière asymptomatique les hommes. Pour les femmes les symptômes sont des pertes blanches grisâtre et fluide. Elle peut conduire à une vaginose et se transformer en vaginite ou vulvite", visible: 0, typecarte:true},
+                {id: 4, Nom: 'Gonococcie', texte: "Aussi appelé chaude-pisse. Se transmet lors de rapport non protégés. Symptômes chez l'homme : écoulement de pus par la verge, brûlures urinaires. Souvent asymptomatique chez la femme, on peut tout de même observer des démengeaisons, des douleurs au rapport, des brûlures en urinant.", visible: 0, typecarte:true},
+                {id: 5, Nom: 'Herpès génital', texte: "Virus qui reste à vie dans l'organisme et se manifeste par des poussées. Les symptômes sont des petites vésicules qui peuvent brûler ou démanger", visible: 0, typecarte:true},
+                {id: 6, Nom: 'Morpions', texte: "Petits insectes noirs qui transmettent la phtiriase. Symptômes: démangeaisons", visible: 0, typecarte:true},
+                {id: 7, Nom: 'Trichomonase', texte: "Causée par un parasite. Se transmet aussi en partageant le linge de toilette ou les sous-vêtements. Peut causer une vaginite ou une urétrite.", visible: 0, typecarte:true},
+                {id: 8, Nom: 'Syphilis', texte: "Causée par une bactérie. Évolue en trois stade : 1) Lésion ronde, unique, dure et non douloureuse sur les parties générale. 2) Lésions rose pale ou brunes qui semble peler pouvant toucher le corps entier. 3) Complications tardives dues à une non détection", visible: 0, typecarte:true},
 
             ],
             carteFinal: [],
         }
     },
     methods: {
+    reset () { 
+      coups= 0
+      temps= 0
+      reponse=false
+      idcarte1=-1
+      idcarte1Select= -1
+      idcarte2Select= -1
+      nom=[]
+      victoire=0
+      carteFinal= []
+    },
+    clickreponse () { 
+        this.reponse=!this.reponse;
+    },
         clickCarte(id) {
             this.coups++;
             if(this.idcarte1==-1){ //ça veut dire qu'il n'y a pas de carte retournée
@@ -38,10 +55,21 @@ export default {
                 if(this.carteFinal[id].id==this.idcarte1) {//les cartes match
                     this.carteFinal[this.idcarte1Select].visible=2
                     this.carteFinal[id].visible=2
+                    this.nom.push(id)
                     this.idcarte1=-1
                     this.idcarte1Select = -1
                     this.idcarte2Select = -1 
                     console.log("Win")
+                     for (let j = 0; j < this.carteFinal.length; j++){
+                        if(this.carteFinal[j].visible==2){
+                        this.victoire = this.victoire+2;}
+                    }
+                    if(this.victoire==32){
+                         
+                    }
+                    else {
+                        this.victoire=0;
+                    }
                 }
                 else{ //Les cartes match pas
                     
@@ -51,7 +79,7 @@ export default {
                     this.idcarte1=-1
                     this.idcarte1Select = -1
                     this.idcarte2Select = -1   
-                    }, 500000);
+                    }, 1000);
                     console.log("Lose")
                 }
             }
@@ -88,36 +116,48 @@ export default {
             <div class="score">
                 <h3>Nombre de coups : {{ coups }}</h3> 
             
-                <h3>Temps : </h3>
+            </div>
+            <div v-if="victoire==32">
+                <button @click="($emit('endMemo',{result:coups}),reset())">Continuez</button>
             </div>
         </div>
-
-        <div class=" page d-flex flex-column justify-center ">
+        <div v-if="reponse" class="listereponse">
+            <div v-for="item in nom" >
+                  <p  v-if="carteFinal[item].visible==2" style="text-decoration: underline;">{{ carteFinal[item].Nom }} :</p>
+                   <p  v-if="carteFinal[item].visible==2">{{carteFinal[item].texte}}</p>
+            </div>
+        </div>
+        <div v-else class=" page d-flex flex-column justify-center ">
           <div v-for="(item, index) in carteFinal" :key="index" class="a">
             <div v-if="item.visible==1">
-                <p @click="clickCarte(index)" :style="idcarte1Select == index  || idcarte2Select == index ? 'border: 1px solid #252525' : ''" v-if="item.typecarte">{{ item.Nom }}</p>
-                <p @click="clickCarte(index)" :style="idcarte1Select == index || idcarte2Select == index ? 'border: 1px solid #252525' : ''" v-else>{{ item.texte }}</p>
+                <p  v-if="item.typecarte">{{ item.Nom }}</p>
+                <p  v-else> Texte carte     </p>
             </div>
-            <div v-else-if="item.visible==0" style="align-self: center;">
-                 <img  @click="clickCarte(index)" style=" max-width: 100%; border: 2px solid #FFC6C0" src="src/314380334_1154748302131982_231124094073081350_n.jpg">
+            <div v-else-if="item.visible==0" style="align-self: center;  border: 2px solid #FFC6C0; border-radius:2px;">
+                 <img  @click="clickCarte(index)" style=" max-width: 100%; background-color:cyan " src="src/317847993_468125628821602_2541284320195710249_n.png">
             </div>
           </div>
           
         </div>
         <div class="texterep" >
           <div v-if=" idcarte1Select != -1 && !this.carteFinal[idcarte1Select].typecarte && this.carteFinal[idcarte1Select].visible == 1 ">
+          Carte 1: 
           {{  carteFinal[idcarte1Select].texte}}
           </div>
           <div v-if=" idcarte2Select != -1 && !this.carteFinal[idcarte2Select].typecarte && this.carteFinal[idcarte2Select].visible == 1 ">
+          Carte 2 : 
           {{ carteFinal[idcarte2Select].texte }}
           </div>
           </div>
-        <div class="entete">
+        <div class="rep">
             <div class="reponse">
                 <h1> Réponse </h1>
             </div>
 
-           <div>
+           <div v-if="reponse" @click="clickreponse() ">
+           <img  src="src/icons8-flèche-bas-50.png">
+           </div>
+           <div v-else @click="clickreponse() ">
            <img  src="src/icons8-flèche-haut-50.png">
            </div>
 
@@ -155,6 +195,12 @@ h3 {
    align-items: flex-start; 
       justify-content:space-between; 
 }
+.listereponse{
+       display:flex;
+     flex-direction: column; 
+   align-items: flex-start; 
+      justify-content:space-between; 
+}
 .global{
    display: flex; 
    flex-direction: column; 
@@ -177,6 +223,15 @@ h3 {
 .a{
     display:flex;
     align-items:center;
+}
+.rep{
+     display: flex; 
+   flex-direction: row; 
+   align-items: flex-start; 
+    width:100%;
+    border:1px solid;
+    border-color:#000000;
+    border-radius:10px;
 }
 
 </style>
