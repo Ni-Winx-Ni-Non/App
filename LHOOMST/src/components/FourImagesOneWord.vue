@@ -8,10 +8,10 @@ export default {
     data() {
         return {
             images: {
-                1: "../assets/images/hints/" + instance.hints[0] + ".png",
-                2: "../assets/images/hints/" + instance.hints[1] + ".png",
-                3: "../assets/images/hints/" + instance.hints[2] + ".png",
-                4: "../assets/images/hints/" + instance.hints[3] + ".png"
+                1: "https://controller.genesis-mc.fr/ndi/" + instance.hints[0] + ".png",
+                2: "https://controller.genesis-mc.fr/ndi/" + instance.hints[1] + ".png",
+                3: "https://controller.genesis-mc.fr/ndi/" + instance.hints[2] + ".png",
+                4: "https://controller.genesis-mc.fr/ndi/" + instance.hints[3] + ".png"
             },
             fullsizeImage: undefined,
 
