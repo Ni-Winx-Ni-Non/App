@@ -6,38 +6,50 @@ export default {
       temps: 0, 
       idcarte1:-1,
       idcarte1Select: -1,
+      idcarte2Select: -1,
             cartes: [
-                {id: 1, Nom: 'Chlamydia', texte: "CHText", visible: true, typecarte:true},
-                {id: 2, Nom: 'Condylome', texte: "ConText", visible: true, typecarte:true},
-                {id: 3, Nom: 'trois', texte: "troisTex", visible: true, typecarte:true},
-                {id: 4, Nom: 'quatre', texte: "quatreTex", visible: true, typecarte:true},
-                {id: 5, Nom: 'cinq', texte: "cinqTex", visible: true, typecarte:true},
-                {id: 6, Nom: 'six', texte: "sixTex", visible: true, typecarte:true},
-                {id: 7, Nom: 'sept', texte: "septTex", visible: true, typecarte:true},
-                {id: 8, Nom: 'huit', texte: "huitTex", visible: true, typecarte:true},
+                {id: 1, Nom: 'Chlamydia', texte: "CHText", visible: 0, typecarte:true},
+                {id: 2, Nom: 'Condylome', texte: "ConText", visible: 0, typecarte:true},
+                {id: 3, Nom: 'trois', texte: "troisTex", visible: 0, typecarte:true},
+                {id: 4, Nom: 'quatre', texte: "quatreTex", visible: 0, typecarte:true},
+                {id: 5, Nom: 'cinq', texte: "cinqTex", visible: 0, typecarte:true},
+                {id: 6, Nom: 'six', texte: "sixTex", visible: 0, typecarte:true},
+                {id: 7, Nom: 'sept', texte: "septTex", visible: 0, typecarte:true},
+                {id: 8, Nom: 'huit', texte: "huitTex", visible: 0, typecarte:true},
             ],
             carteFinal: [],
         }
     },
     methods: {
         clickCarte(id) {
+            this.coups++;
             if(this.idcarte1==-1){ //ça veut dire qu'il n'y a pas de carte retournée
                 //On retourne la carte
                 this.idcarte1Select = id
                 this.idcarte1= this.carteFinal[id].id; // on récupère l'id complémentaire
+                this.carteFinal[id].visible=1
             }
             else if (this.idcarte1Select != id){ //ça veut dire qu'il y a déjà une carte de retournée
                 //On retourne la carte
+                this.idcarte2Select = id;
+                this.carteFinal[id].visible=1
                 if(this.carteFinal[id].id==this.idcarte1) {//les cartes match
-                    this.carteFinal[this.idcarte1Select].visible=false
-                    this.carteFinal[id].visible=false
+                    this.carteFinal[this.idcarte1Select].visible=2
+                    this.carteFinal[id].visible=2
                     this.idcarte1=-1
                     this.idcarte1Select = -1
+                    this.idcarte2Select = -1 
                     console.log("Win")
                 }
                 else{ //Les cartes match pas
+                    
+                    setTimeout(() => {
+                        this.carteFinal[this.idcarte1Select].visible=0
+                    this.carteFinal[id].visible=0
                     this.idcarte1=-1
                     this.idcarte1Select = -1
+                    this.idcarte2Select = -1   
+                    }, 500000);
                     console.log("Lose")
                 }
             }
@@ -72,7 +84,7 @@ export default {
             Jeu du mémo
         </h2>
             <div class="score">
-                <h3>Nombre de coup : {{ coups }}</h3> 
+                <h3>Nombre de coups : {{ coups }}</h3> 
             
                 <h3>Temps : </h3>
             </div>
@@ -80,16 +92,27 @@ export default {
 
         <div class=" page d-flex flex-column justify-center ">
           <div v-for="(item, index) in carteFinal" :key="index" class="a">
-            <div v-if="item.visible">
-                <p @click="clickCarte(index)" :style="idcarte1Select == index ? 'border: 1px solid #252525' : ''" v-if="item.typecarte">{{ item.Nom }}</p>
-                <p @click="clickCarte(index)" :style="idcarte1Select == index? 'border: 1px solid #252525' : ''" v-else>{{ item.texte }}</p>
+            <div v-if="item.visible==1">
+                <p @click="clickCarte(index)" :style="idcarte1Select == index  || idcarte2Select == index ? 'border: 1px solid #252525' : ''" v-if="item.typecarte">{{ item.Nom }}</p>
+                <p @click="clickCarte(index)" :style="idcarte1Select == index || idcarte2Select == index ? 'border: 1px solid #252525' : ''" v-else>{{ item.texte }}</p>
+            </div>
+            <div v-else-if="item.visible==0" style="align-self: center;">
+                 <img  @click="clickCarte(index)" style=" max-width: 100%; border: 2px solid #FFC6C0" src="src/314380334_1154748302131982_231124094073081350_n.jpg">
             </div>
           </div>
+          
         </div>
-
+        <div class="texterep" >
+          <div v-if=" idcarte1Select != -1 && !this.carteFinal[idcarte1Select].typecarte && this.carteFinal[idcarte1Select].visible == 1 ">
+          {{  carteFinal[idcarte1Select].texte}}
+          </div>
+          <div v-if=" idcarte2Select != -1 && !this.carteFinal[idcarte2Select].typecarte && this.carteFinal[idcarte2Select].visible == 1 ">
+          {{ carteFinal[idcarte2Select].texte }}
+          </div>
+          </div>
         <div class="entete">
             <div class="reponse">
-                <h1> Reponse </h1>
+                <h1> Réponse </h1>
             </div>
 
            <div>
@@ -111,7 +134,12 @@ h1 {
 h3 {
   font-size: 1.2rem;
 }
-
+.texterep{
+    display: flex;
+    align-items: flex-start;
+    justify-content:space-between;
+    width:100%;
+}
 .page {
   display: grid;
   width: 100%;
@@ -130,7 +158,8 @@ h3 {
    flex-direction: column; 
    align-items: flex-start; 
    justify-content:space-between; 
-   height: 100vh
+   height: 100vh;
+   background-color:#FFC6C0; 
 }
 .entete{
     display: flex; 
@@ -143,4 +172,9 @@ h3 {
     flex: 1;
     text-align:center;
 }
+.a{
+    display:flex;
+    align-items:center;
+}
+
 </style>
