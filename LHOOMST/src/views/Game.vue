@@ -119,7 +119,7 @@ export default {
     <Quizz v-if="quizSelect" :gameIndex="indexGame" @endQuizz="nextGameEnd" />
     <Memo v-if="memoSelect" @endMemo="nextGameEnd" />
     <FourImagesOneWord v-if="imageSelect" @endGame="nextGameEnd"/>
-    <div v-if="captcha" style="background-color: white; height: 100vh">
+    <div v-if="captcha" style="background-color: white; max-width: 400px; height: 100vh">
         <Captcha @EndCaptcha="captcha = false" />
     </div>
   </div>

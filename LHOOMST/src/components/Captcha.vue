@@ -50,7 +50,7 @@ export default {
         <div class="captcha-area">
             <div class="img_container">
                 <img class="captcha_img" src="../assets/Background-captcha.png" alt="captcha">
-                <span class="capt-text" style="color: white">{{ captcha }}</span>
+                <span class="capt-text" style="color: #555555">{{ captcha }}</span>
             </div>
             <button @click="removeContent(); getCaptcha()" class="reload-button">Regénérer le captcha<i class="redo"></i></button>
         </div>
@@ -70,7 +70,7 @@ h2{
 }
 
 .captcha_container{
-    width : 90vW;
+    max-width : 400px;
     background-color: #8DB0C9;
     margin: auto;
     margin-top: 10rem;

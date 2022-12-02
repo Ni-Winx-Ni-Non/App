@@ -25,22 +25,31 @@ export default {
         initWord() {
             const emptyWord = [];
             for (let i = 0; i < instance.word.length; i++) {
-                emptyWord.push(undefined);
+                const letter = instance.word[i];
+                if (letter === ' ' || letter === '-') {
+                    emptyWord.push({index: -1, letter: letter});
+                } else {
+                    emptyWord.push(undefined);
+                }
             }
-            console.log(emptyWord);
             return emptyWord;
         },
 
         initLetters() {
             const letters = [];
             for (let i = 0; i < instance.word.length; i++) {
-                letters.push({ index: undefined, letter: instance.word.charAt(i) });
+                const letter = instance.word.charAt(i);
+                if (letter === ' ' || letter === '-') {
+                    continue;
+                }
+                letters.push({ index: undefined, letter: letter });
             }
             letters.sort(() => Math.random() - 0.5);
             for (let i = 0; i < letters.length; i++) {
-                letters[i].index = i;
+                if (letters[i]) {
+                    letters[i].index = i;
+                }
             }
-            console.log(letters);
             return letters;
         },
 

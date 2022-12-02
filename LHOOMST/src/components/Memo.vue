@@ -39,49 +39,50 @@ export default {
         this.reponse=!this.reponse;
     },
         clickCarte(id) {
-            this.coups++;
-            if(this.idcarte1==-1){ //ça veut dire qu'il n'y a pas de carte retournée
-                //On retourne la carte
-                this.idcarte1Select = id
-                this.idcarte1= this.carteFinal[id].id; // on récupère l'id complémentaire
-                this.carteFinal[id].visible=1
-            }
-            else if (this.idcarte1Select != id){ //ça veut dire qu'il y a déjà une carte de retournée
-                //On retourne la carte
-                this.idcarte2Select = id;
-                this.carteFinal[id].visible=1
-                if(this.carteFinal[id].id==this.idcarte1) {//les cartes match
-                    this.carteFinal[this.idcarte1Select].visible=2
-                    this.carteFinal[id].visible=2
-                    this.nom.push(id)
-                    this.idcarte1=-1
-                    this.idcarte1Select = -1
-                    this.idcarte2Select = -1 
-                    console.log("Win")
-                     for (let j = 0; j < this.carteFinal.length; j++){
-                        if(this.carteFinal[j].visible==2){
-                        this.victoire = this.victoire+2;}
+            if (this.idcarte2Select == -1) {
+                this.coups++;
+                if(this.idcarte1==-1){ //ça veut dire qu'il n'y a pas de carte retournée
+                    //On retourne la carte
+                    this.idcarte1Select = id
+                    this.idcarte1= this.carteFinal[id].id; // on récupère l'id complémentaire
+                    this.carteFinal[id].visible=1
+                }
+                else if (this.idcarte1Select != id){ //ça veut dire qu'il y a déjà une carte de retournée
+                    //On retourne la carte
+                    this.idcarte2Select = id;
+                    this.carteFinal[id].visible=1
+                    if(this.carteFinal[id].id==this.idcarte1) {//les cartes match
+                        this.carteFinal[this.idcarte1Select].visible=2
+                        this.carteFinal[id].visible=2
+                        this.nom.push(id)
+                        this.idcarte1=-1
+                        this.idcarte1Select = -1
+                        this.idcarte2Select = -1 
+                        console.log("Win")
+                        for (let j = 0; j < this.carteFinal.length; j++){
+                            if(this.carteFinal[j].visible==2){
+                            this.victoire = this.victoire+2;}
+                        }
+                        if(this.victoire==32){
+                            
+                        }
+                        else {
+                            this.victoire=0;
+                        }
                     }
-                    if(this.victoire==32){
-                         
-                    }
-                    else {
-                        this.victoire=0;
+                    else{ //Les cartes match pas
+                        
+                        setTimeout(() => {
+                            this.carteFinal[this.idcarte1Select].visible=0
+                        this.carteFinal[id].visible=0
+                        this.idcarte1=-1
+                        this.idcarte1Select = -1
+                        this.idcarte2Select = -1   
+                        }, 1000);
+                        console.log("Lose")
                     }
                 }
-                else{ //Les cartes match pas
-                    
-                    setTimeout(() => {
-                        this.carteFinal[this.idcarte1Select].visible=0
-                    this.carteFinal[id].visible=0
-                    this.idcarte1=-1
-                    this.idcarte1Select = -1
-                    this.idcarte2Select = -1   
-                    }, 1000);
-                    console.log("Lose")
-                }
             }
-            
         }
     },
     mounted() {
@@ -118,6 +119,7 @@ export default {
                 <button @click="($emit('endMemo',{result:coups}),reset())">Continuez</button>
             </div>
         </div>
+         <div>Associez les infections avec leurs descriptions. Pour cela, cliquez d'abord sur une carte rose, lisez la description puis tentez de trouver la carte bleue correspondante.</div>
         <div v-if="reponse" class="listereponse">
             <div v-for="item in nom" >
                   <p  v-if="carteFinal[item].visible==2" style="text-decoration: underline;">{{ carteFinal[item].Nom }} :</p>
@@ -130,8 +132,11 @@ export default {
                 <p  v-if="item.typecarte">{{ item.Nom }}</p>
                 <p  v-else> Texte carte     </p>
             </div>
-            <div v-else-if="item.visible==0" style="align-self: center;  border: 2px solid #FFC6C0; border-radius:2px;">
-                 <img  @click="clickCarte(index)" style=" max-width: 100%; background-color:cyan " src="../assets/logoapp.png">
+            <div v-else-if="(item.visible==0 && !item.typecarte)" style="align-self: center; border-radius:2rem;" class="a">
+                 <img  @click="clickCarte(index)" style=" max-width: 60%; background-color:#fc9e8b " src="../assets/logoapp.png">
+            </div>
+            <div v-else-if="(item.visible==0 &&item.typecarte)" style="align-self: center; border-radius:2rem;" class="a">
+                 <img  @click="clickCarte(index)" style=" max-width: 60%; background-color:#cafcf7 " src="../assets/logoapp.png">
             </div>
           </div>
           
@@ -148,7 +153,7 @@ export default {
           </div>
         <div class="rep">
             <div class="reponse">
-                <h1> Réponse </h1>
+                <h2> Réponse </h2>
             </div>
 
            <div v-if="reponse" @click="clickreponse() ">
@@ -203,7 +208,8 @@ h3 {
    align-items: flex-start; 
    justify-content:space-between; 
    height: 100vh;
-   background-color:#FFC6C0; 
+   background-color:#8DB0B9; 
+   padding: 2rem; 
 }
 .entete{
     display: flex; 
@@ -218,6 +224,7 @@ h3 {
 .a{
     display:flex;
     align-items:center;
+    justify-content: center;
 }
 .rep{
      display: flex; 
