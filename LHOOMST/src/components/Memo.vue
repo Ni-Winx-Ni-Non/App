@@ -131,7 +131,7 @@ export default {
                 <p  v-else> Texte carte     </p>
             </div>
             <div v-else-if="item.visible==0" style="align-self: center;  border: 2px solid #FFC6C0; border-radius:2px;">
-                 <img  @click="clickCarte(index)" style=" max-width: 100%; background-color:cyan " src="src/assets/logoapp.png">
+                 <img  @click="clickCarte(index)" style=" max-width: 100%; background-color:cyan " src="../assets/logoapp.png">
             </div>
           </div>
           
@@ -152,10 +152,10 @@ export default {
             </div>
 
            <div v-if="reponse" @click="clickreponse() ">
-           <img  src="src/icons8-flèche-bas-50.png">
+           <img  src="../assets/bas.png">
            </div>
            <div v-else @click="clickreponse() ">
-           <img  src="src/icons8-flèche-haut-50.png">
+           <img  src="../assets/haut.png">
            </div>
 
         </div>

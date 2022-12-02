@@ -2,18 +2,23 @@
 import questionList from "../assets/questions-quiz.json"
 
 export default {
+    props: ['gameIndex'],
     data() {
         return {
             questions: questionList,
-            questionId: 0,
+            questionId: -1,
             correctAnswers: 0,
             questionAnswered: false,
             wellAnswered: true,
             gameOver: false,
-            game:1
+            game: -1
         }
     },
     methods: {
+        init() {
+            this.game = this.gameIndex,
+                this.questionId = (this.game - 1) * 5
+        },
         questionSuivante() {
             this.wellAnswered = true
             this.questionAnswered = false
@@ -43,12 +48,14 @@ export default {
         reset() {
 
             //this.questionId = 0,
-                this.correctAnswers = 0,
+            this.correctAnswers = 0,
                 this.questionAnswered = false,
                 this.wellAnswered = true,
                 this.gameOver = false,
                 this.game++,
-                console.log('Quizz destroyed')
+                console.log('Quizz destroyed'),
+                console.log(this.questionId)
+
         }
 
     }
@@ -57,10 +64,20 @@ export default {
 </script>
 
 <template>
-    <!-- Questions: on affiche une div pour chaque question -->
-    <div v-if="!gameOver" class="playing" :class="this.wellAnswered  ? ''  : 'wrong'">
+    <div v-if="(questionId == -1)" class="playing">
         <div class="card">
-            <h1 style="margin-bottom: 0px">Question {{ (questionId + 1) }} / 5</h1>
+            <div class="content">
+                <h2>Quiz :<br />5 questions de savoir sur la sexualité.</h2>
+            </div>
+
+        </div>
+        <div class="boutons">
+            <button @click="init()">Démarrer le quiz !</button>
+        </div>
+    </div>
+    <div v-else-if="!gameOver" class="playing" :class="this.wellAnswered ? '' : 'wrong'">
+        <div class="card">
+            <h1 style="margin-bottom: 0px">Question {{ (questionId + 1 -((this.game-1)*5)) }} / 5</h1>
 
             <div v-if="questionAnswered" class="content">
                 <div>
@@ -80,7 +97,7 @@ export default {
         </div>
 
         <div v-else class="boutons">
-            <button v-if="(questionId < game*5 - 1)" @click="questionSuivante">Suivant</button>
+            <button v-if="(questionId < game * 5 - 1)" @click="questionSuivante">Suivant</button>
             <button v-else @click="end">Voir le score</button>
         </div>
 
@@ -103,7 +120,7 @@ h1 {
     text-align: center;
 }
 
-.score{
+.score {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -167,12 +184,11 @@ button:hover {
 .wrong {
     background-color: #FC9E8B;
 }
-.content{
+
+.content {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
 }
-
-
 </style>
