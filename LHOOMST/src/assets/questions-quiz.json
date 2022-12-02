@@ -1,0 +1,52 @@
+[
+    {
+        "description": "Si je ne vais pas jusqu’à la pénétration, il est impossible que j’attrape une IST.",
+        "response": false,
+        "explication": "Certaines infections peuvent se transmettre par les mains lors de caresses ou par des frottements intimes : lorsque les sexes se touchent, même sans pénétration. Un simple contact entre muqueuses (cunnilingus, fellation, anulingus) peut aussi être à l’origine d’une IST."
+    },
+    {
+        "description": "Si mon test VIH est négatif, je suis aussi négatif aux autres IST.", 
+        "response": false, 
+        "explication": "Le test VIH ne dépiste pas les autres IST !"
+    },
+    {
+        "description": "Le moyen le plus efficace pour se protéger des Infections Sexuellement Transmissibles est d’utiliser un préservatif pendant les rapports sexuels.",
+        "response": true,
+        "explication": ""
+    },
+    {
+        "description": "Tant que je n’ai pas de symptôme, je n’ai pas besoin de me faire dépister.",
+        "response": false,
+        "explication": "On peut être infecté par une IST sans ressentir de symptômes. Le seul moyen d'en être sûr, c'est le dépistage !"
+    },
+    {
+        "description": "La plupart des IST se soignent facilement.",
+        "response": true,
+        "explication": "Vrai, la plupart des IST se soignent facilement ! /n Le plus souvent avec une simple prise d'antibiotiques."
+    },
+    {
+        "description": "La chlamydiae peut rendre stérile.",
+        "response": true,
+        "explication": "Vrai, Une infection à chlamydiae, si elle n’est pas traitée, peut provoquer une stérilité aussi bien chez l’homme que chez la femme.  C’est l’IST la plus fréquente chez les jeunes, aussi bien chez les filles que chez les garçons."
+    },
+    {
+        "description": "Fellation, cunnilingus et anulingus ne nécessitent pas de préservatifs.",
+        "response": false,
+        "explication": "Les IST peuvent se transmettre lors d’une fellation, d’un cunnilingus, ou d’un anulingus, notamment l'HPV et l’herpès. C’est pour cela que l’utilisation du préservatif lors des rapports bucco-génitaux est indispensable. "
+    },
+    {
+        "description": "Le VIH peut se transmettre par un baiser",
+        "response": false,
+        "explication": "Le VIH ne se transmet ni par un baiser, ni par une piqûre de moustique, ni en utilisant les toilettes publiques, ni lorsque vous buvez dans le verre d'une personne séropositive.  "
+    },
+    {
+        "description": "Une personne porteuse du VIH sous traitement peut transmettre le virus",
+        "response": false,
+        "explication": "Il s'agit du fameux I = I, à savoir Indétectable = Intransmissible. "
+    },
+    {
+        "description": "Le VIH et le sida, c'est différent",
+        "response": true,
+        "explication": "Le virus de l'immunodéficience humaine (VIH) peut, sans traitement, être responsable du syndrome d'immunodéficience acquise (sida), phase la plus avancée de l'infection au VIH. "
+    }
+]

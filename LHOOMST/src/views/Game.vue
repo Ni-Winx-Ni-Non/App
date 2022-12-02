@@ -8,6 +8,8 @@ export default {
     return {
       larg: null,
       haut: null,
+      quizzResult: [],
+      quizSelect: false,
       indexGame: 0,
       cloud: [
         {x: 200, y: 1450, visible: false},
@@ -36,11 +38,16 @@ export default {
     nextGame() {
       this.cloud[this.indexGame].visible = false
       this.indexGame++
-      if (this.indexGame < this.cloud.length) {
-        this.cloud[this.indexGame].visible = true
-      } else {
-        console.log("Show Result")
-      }
+      this.quizSelect = true
+    },
+    nextGameEnd(params) {
+        this.quizSelect = false
+        this.quizzResult.push(params.result)
+        if (this.indexGame < this.cloud.length) {
+            this.cloud[this.indexGame].visible = true
+        } else {
+            console.log("Show Result")
+        }
     }
   },
   mounted() {
@@ -63,6 +70,7 @@ export default {
         </div>
       </div>
     </div>
+    <Quizz v-if="quizSelect" @endQuizz="nextGameEnd" />
   </div>
 </template>
 
