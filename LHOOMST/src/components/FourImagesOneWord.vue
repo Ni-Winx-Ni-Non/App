@@ -1,10 +1,12 @@
 <script>
 
-export default {
+import json from '../assets/json/four_images_one_word.json';
+const instance = json[Math.floor(Math.random() * json.length)];
+instance.word = instance.word.toUpperCase();
 
+export default {
     data() {
-        return {
-            images: {
+        return {images: {
                 1: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O",
                 2: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O",
                 3: "https://play-lh.googleusercontent.com/kEeTu6YanMhv1eaCEKddk75jRFtclLrPeeDZ4G0UnpOxkcuspVs_2WXVxCwpVgPulf-O",
@@ -12,13 +14,36 @@ export default {
             },
             fullsizeImage: undefined,
 
-            word: [undefined, undefined, undefined, '-', undefined, undefined, undefined],
+            userWord: this.initWord(),
 
-            letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
+            letters: this.initLetters()
         }
     },
 
     methods: {
+        initWord() {
+            const emptyWord = [];
+            for (let i = 0; i < instance.word.length; i++) {
+                emptyWord.push(undefined);
+            }
+            console.log(emptyWord);
+            return emptyWord;
+        },
+
+        initLetters() {
+            const letters = [];
+            for (let i = 0; i < instance.word.length; i++) {
+                letters.push({ index: undefined, letter: instance.word.charAt(i) });
+            }
+            letters.sort(() => Math.random() - 0.5);
+            for (let i = 0; i < letters.length; i++) {
+                letters[i].index = i;
+            }
+            console.log(letters);
+            return letters;
+        },
+
+
         onImageClick(id) {
             this.fullsizeImage = id;
         },
@@ -28,13 +53,15 @@ export default {
         },
 
         onLetterClick(letter) {
-            if (this.isLetterInWord(letter)) {
+            if (!letter || this.isLetterPlaced(letter)) {
                 return;
             }
 
-            for (let i = 0; i < this.word.length; i++) {
-                if (!this.word[i]) {
-                    this.word[i] = letter;
+            for (let i = 0; i < this.userWord.length; i++) {
+                if (!this.userWord[i]) {
+                    this.letters[letter.index] = undefined;
+                    this.userWord[i] = letter;
+
                     if (this.isFinished()) {
                         this.verifyWord();
                     }
@@ -43,13 +70,26 @@ export default {
             }
         },
 
-        onLetterRemove(index) {
-            this.word[index] = undefined;
+        onLetterRemove(letter) {
+            if (!letter || letter.letter === ' ' || letter.letter === '-') {
+                return;
+            }
+            let i;
+            for (i = 0; i < this.userWord.length; i++) {
+                if (this.userWord[i] && this.userWord[i].index === letter.index) {
+                    break;
+                }
+            }
+            if (i === this.userWord.length) {
+                return;
+            }
+            this.userWord[i] = undefined;
+            this.letters[letter.index] = letter;
         },
 
-        isLetterInWord(letter) {
-            for (let i = 0; i < this.word.length; i++) {
-                if (this.word[i] === letter) {
+        isLetterPlaced(letter) {
+            for (let i = 0; i < this.userWord.length; i++) {
+                if (this.userWord[i] && this.userWord[i].index === letter.index) {
                     return true;
                 }
             }
@@ -58,8 +98,8 @@ export default {
         },
 
         isFinished() {
-            for (let i = 0; i < this.word.length; i++) {
-                if (this.word[i] === undefined) {
+            for (let i = 0; i < this.userWord.length; i++) {
+                if (this.userWord[i] === undefined) {
                     return false;
                 }
             }
@@ -67,10 +107,20 @@ export default {
             return true;
         },
 
+        isDone() {
+            let result = '';
+            this.userWord.forEach(letter => result += letter.letter);
+            return result === instance.word;
+        },
+
         verifyWord() {
-            const elem = document.getElementById('word');
-            elem.classList.add('shaking');
-            setTimeout(() => elem.classList.remove('shaking'), 750);
+            if (this.isDone()) {
+                // TODO: End game
+            } else {
+                const elem = document.getElementById('word');
+                elem.classList.add('shaking');
+                setTimeout(() => elem.classList.remove('shaking'), 750);
+            }
         }
     }
 
@@ -96,14 +146,14 @@ export default {
         </div>
 
         <div id="word" class="panel letter-hole-container">
-            <div v-for="letter, index in word" class="letter-hole" :class="{ letter: letter && letter !== ' ' && letter !== '-', hole: !letter, delimiter: letter === ' ' || letter === '-' }" @click="onLetterRemove(index)">
-                {{ letter ?? '' }}
+            <div v-for="letter in userWord" class="letter-hole" :class="{ letter: letter && letter.letter !== ' ' && letter.letter !== '-', hole: !letter, delimiter: letter && (letter.letter === ' ' || letter.letter === '-') }" @click="onLetterRemove(letter)">
+                {{ letter ? letter.letter : '' }}
             </div>
         </div>
 
         <div id="letters" class="panel letter-hole-container">
-            <div v-for="letter in letters" class="letter-hole" :class="{ letter: !isLetterInWord(letter), hole: isLetterInWord(letter) }" @click="onLetterClick(letter)">
-                {{ isLetterInWord(letter) ? '' : letter }}
+            <div v-for="letter in letters" class="letter-hole" :class="{ letter: letter, hole: !letter }" @click="onLetterClick(letter)">
+                {{ letter ? letter.letter : '' }}
             </div>
         </div>
     </div>
@@ -148,11 +198,12 @@ export default {
         width: 7.5rem;
         border-radius: 1.40625rem;
         box-shadow: 0 0 0.5rem black;
-        transition: transform 0.1s ease;
+        transition: 0.1s ease;
     }
 
     .image-thumbnail:hover {
         transform: scale(105%);
+        box-shadow: 0 0 0.65rem black;
     }
 
     #image-1 {
