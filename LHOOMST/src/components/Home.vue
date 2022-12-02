@@ -77,7 +77,8 @@ button {
 }
 
 #enter {
-    margin-bottom: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 #info:hover,
