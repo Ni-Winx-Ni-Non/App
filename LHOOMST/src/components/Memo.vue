@@ -3,24 +3,62 @@ export default {
     data() {
         return {
           coups: 0,
-      temps: 0,           
+      temps: 0, 
+      idcarte1:-1,
+      idcarte1Select: -1,
             cartes: [
-                {id: 1, Nom: 'Chlamydia', texte: "Chlamydia", visible: 0, typecarte:true, idcomplementaire: 9},
-                {id: 2, Nom: 'Condylome', texte: "Condylome", visible: true, typecarte:true, idcomplementaire: 10},
-                {id: 3, Nom: 'trois', texte: "trois", visible: true, typecarte:true, idcomplementaire: 11},
-                {id: 4, Nom: 'quatre', texte: "quatre", visible: true, typecarte:true, idcomplementaire: 12},
-                {id: 5, Nom: 'cinq', texte: "cinq", visible: true, typecarte:true, idcomplementaire: 13},
-                {id: 6, Nom: 'six', texte: "six", visible: true, typecarte:true, idcomplementaire: 14},
-                {id: 7, Nom: 'sept', texte: "sept", visible: true, typecarte:true, idcomplementaire: 15},
-                {id: 8, Nom: 'huit', texte: "huit", visible: true, typecarte:true, idcomplementaire: 16},
-            ]
+                {id: 1, Nom: 'Chlamydia', texte: "CHText", visible: true, typecarte:true},
+                {id: 2, Nom: 'Condylome', texte: "ConText", visible: true, typecarte:true},
+                {id: 3, Nom: 'trois', texte: "troisTex", visible: true, typecarte:true},
+                {id: 4, Nom: 'quatre', texte: "quatreTex", visible: true, typecarte:true},
+                {id: 5, Nom: 'cinq', texte: "cinqTex", visible: true, typecarte:true},
+                {id: 6, Nom: 'six', texte: "sixTex", visible: true, typecarte:true},
+                {id: 7, Nom: 'sept', texte: "septTex", visible: true, typecarte:true},
+                {id: 8, Nom: 'huit', texte: "huitTex", visible: true, typecarte:true},
+            ],
+            carteFinal: [],
         }
     },
     methods: {
-        valid(id) {
-            console.log("Question id: " + id)
-            this.$emit('emitValid', {index: id})
+        clickCarte(id) {
+            if(this.idcarte1==-1){ //ça veut dire qu'il n'y a pas de carte retournée
+                //On retourne la carte
+                this.idcarte1Select = id
+                this.idcarte1= this.carteFinal[id].id; // on récupère l'id complémentaire
+            }
+            else if (this.idcarte1Select != id){ //ça veut dire qu'il y a déjà une carte de retournée
+                //On retourne la carte
+                if(this.carteFinal[id].id==this.idcarte1) {//les cartes match
+                    this.carteFinal[this.idcarte1Select].visible=false
+                    this.carteFinal[id].visible=false
+                    this.idcarte1=-1
+                    this.idcarte1Select = -1
+                    console.log("Win")
+                }
+                else{ //Les cartes match pas
+                    this.idcarte1=-1
+                    this.idcarte1Select = -1
+                    console.log("Lose")
+                }
+            }
+            
         }
+    },
+    mounted() {
+        console.log('Shuffle card')
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < this.cartes.length; j++) {
+                if (i == 0) {
+                    let copy = JSON.stringify(this.cartes[j])
+                    this.carteFinal.push(JSON.parse(copy))
+                    this.carteFinal[j].typecarte = false
+                } else {
+                    this.carteFinal.push(this.cartes[j])
+                }
+            }
+        }
+        console.log(JSON.stringify(this.carteFinal))
+        this.carteFinal = this.carteFinal.sort((a, b) => 0.5 - Math.random());
     }
   }
 
@@ -41,53 +79,11 @@ export default {
         </div>
 
         <div class=" page d-flex flex-column justify-center ">
-          <div class="a">
-            je suis une carte
-          </div>
-          <div class="b">
-            je suis une carte
-          </div>
-          <div class="c">
-            je suis une carte
-          </div>
-          <div class="d">
-            je suis une carte
-          </div>
-          <div class="e">
-            je suis une carte
-          </div>
-          <div class="f">
-            je suis une carte
-          </div>
-          <div class="g">
-            je suis une carte
-          </div>
-          <div class="h">
-            je suis une carte
-          </div>
-          <div class="i">
-            je suis une carte
-          </div>
-          <div class="j">
-            je suis une carte
-          </div>
-          <div class="k">
-            je suis une carte
-          </div>
-          <div class="l">
-            je suis une carte
-          </div>
-          <div class="m">
-            je suis une carte
-          </div>
-          <div class="n">
-            je suis une carte
-          </div>
-          <div class="o">
-            je suis une carte
-          </div>
-          <div class="p">
-            je suis une carte
+          <div v-for="(item, index) in carteFinal" :key="index" class="a">
+            <div v-if="item.visible">
+                <p @click="clickCarte(index)" :style="idcarte1Select == index ? 'border: 1px solid #252525' : ''" v-if="item.typecarte">{{ item.Nom }}</p>
+                <p @click="clickCarte(index)" :style="idcarte1Select == index? 'border: 1px solid #252525' : ''" v-else>{{ item.texte }}</p>
+            </div>
           </div>
         </div>
 
@@ -120,82 +116,9 @@ h3 {
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-areas:
-    "a b c d"
-    "e f g h"
-    "i j k l"
-    "m n o p";
-  grid-template-rows: auto;
-  grid-template-columns: auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr))
 }
 
-.page > a {
-  grid-area: a;
-  background-color: #8ca0ff;
-}
-
-.page > b {
-  grid-area: b;
-  background-color: #ffa08c;
-}
-
-.page > c {
-  grid-area: c;
-  background-color: #ffff64;
-}
-
-.page > d {
-  grid-area: d;
-  background-color: #8cffa0;
-}
-
-.page > e {
-  grid-area: e;
-  background-color: #8cffa0;
-}
-.page > f {
-  grid-area: f;
-  background-color: #8cffa0;
-}
-.page > g {
-  grid-area: g;
-  background-color: #8cffa0;
-}
-.page > h {
-  grid-area: h;
-  background-color: #8cffa0;
-}
-.page > i {
-  grid-area: i;
-  background-color: #8cffa0;
-}.page > j {
-  grid-area: j;
-  background-color: #8cffa0;
-}
-.page > k {
-  grid-area: k;
-  background-color: #8cffa0;
-}
-.page > l {
-  grid-area: l;
-  background-color: #8cffa0;
-}
-.page > m {
-  grid-area: m;
-  background-color: #8cffa0;
-}
-.page > n {
-  grid-area: n;
-  background-color: #8cffa0;
-}
-.page > o {
-  grid-area: o;
-  background-color: #8cffa0;
-}
-.page > p {
-  grid-area: p;
-  background-color: #8cffa0;
-}
 .score{
     display:flex;
      flex-direction: column; 
