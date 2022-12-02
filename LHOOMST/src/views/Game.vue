@@ -11,6 +11,8 @@ export default {
       quizzResult: [],
       quizSelect: false,
       indexGame: 0,
+      jeu:true,
+      clic:0,
       cloud: [
         {x: 200, y: 1450, visible: false},
         {x: 840, y: 1400, visible: false},
@@ -26,6 +28,13 @@ export default {
     }
   },
   methods: {
+    easterEGG () { 
+      this.clic=this.clic+1;
+      if(this.clic==12){
+      this.jeu=!this.jeu
+      this.clic=0
+      }
+    },
     emitQuizz(params) {
       console.log("Emit: " + JSON.stringify(params))
     },
@@ -63,11 +72,18 @@ export default {
 <template>
   <div class="main">
     <div class="ratioView">
-      <div id="view" class="view">
+      <div id="view" class="view" v-if="jeu">
         <button @click="$router.back()" style="position: absolute; top: 20px; left: 20px" id="enter">Quitter</button>
         <div v-for="(item, index) in cloud" :key="index">
           <div @click="nextGame()" :style="'height: ' + (200 * haut) / 1920 + 'px; width: ' + (200 * larg) / 1080 + 'px; position: absolute; top: ' + (item.y * haut)/ 1920 + 'px; left:' + (item.x * larg) / 1080 + 'px'" style="border: 1px solid #252525; cursor: pointer" v-if="item.visible"></div>
         </div>
+        <div @click="easterEGG()" :style="'height: ' + (200 * haut) / 1920 + 'px; width: ' + (200 * larg) / 1080 + 'px; position: absolute; top: ' + (100 * haut)/ 1920 + 'px; left:' + (750 * larg) / 1080 + 'px'" style="border: 1px solid #252525; cursor: pointer">
+        </div> 
+      </div>
+      <div id="vieweasteregg" class="viewvieweasteregg" v-else>
+        <img src="../assets/winx.jpg" style="width:100%">
+        <div @click="easterEGG()" :style="'height: ' + (200 * haut) / 1920 + 'px; width: ' + (200 * larg) / 1080 + 'px; position: absolute; top: ' + (100 * haut)/ 1920 + 'px; left:' + (500 * larg) / 1080 + 'px'" style="border: 1px solid #252525; cursor: pointer">
+        </div> 
       </div>
     </div>
     <Quizz v-if="quizSelect" @endQuizz="nextGameEnd" />
@@ -120,6 +136,14 @@ body {
   aspect-ratio: 9/16;
   max-height: 100%;
   background-image: url('../assets/back.png');
+  background-size: cover;
+  background-position: center;
+}
+.vieweasteregg {
+  border: 1px solid #252525;
+  aspect-ratio: 9/16;
+  max-height: 100%;
+  background-image: url('../assets/winx.jpg');
   background-size: cover;
   background-position: center;
 }
